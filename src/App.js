@@ -19,15 +19,14 @@ function App() {
       return data;
     } catch (error) {
       console.log(error);
-      return null;
+      return [];
     }
   }
 
   useEffect(() => {
     fetchData('https://crio-location-selector.onrender.com/countries').then((data) => {
-      // console.log(data);
       setCountryList(data);
-    })
+    }).catch(() => null);
     
   },[]);
 
@@ -36,17 +35,17 @@ function App() {
     fetchData(`https://crio-location-selector.onrender.com/country=${e.target.value}/states`).then((data) => {
         setStateList(data);
         setCityList([]);
-    })
+    }).catch(() => null);
   }
   const handleState = (e) => {
     setSelectedState(e.target.value);
     fetchData(`https://crio-location-selector.onrender.com/country=${selectedCountry}/state=${e.target.value}/cities`).then((data) => {
         setCityList(data);
-    })
+    }).catch(() => null);
   }
   const handleCity = (e) => {
     setSelectedCity(e.target.value);
-    setUserText(`You Seleced ${e.target.value}, ${selectedState}, ${selectedCountry}`);
+    setUserText(`You selected ${e.target.value}, ${selectedState}, ${selectedCountry}`);
   }
 
   return (
